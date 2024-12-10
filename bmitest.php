@@ -80,17 +80,15 @@
 
     <?php
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // รับค่าจากฟอร์ม
+ 
             $first_name = $_POST['first_name'];
             $last_name = $_POST['last_name'];
             $age = $_POST['age'];
             $weight = $_POST['weight'];
             $height = $_POST['height'];
-            
-            // คำนวณค่า BMI
+         
             $bmi = $weight / ($height * $height);
             
-            // แปลผลค่า BMI
             if ($bmi < 18.5) {
                 $bmi_status = "น้ำหนักน้อย";
                 $recommendation = "ควรเพิ่มน้ำหนักเพื่อสุขภาพที่ดี";
@@ -105,7 +103,6 @@
                 $recommendation = "ควรลดน้ำหนักและปรึกษาแพทย์";
             }
 
-            // แสดงผล
             echo "<div class='result'>
                     <p><strong>ข้อมูลผู้ใช้:</strong></p>
                     <p>ชื่อ: $first_name $last_name</p>
