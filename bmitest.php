@@ -79,42 +79,53 @@
     </form>
 
     <?php
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
- 
-            $first_name = $_POST['first_name'];
-            $last_name = $_POST['last_name'];
-            $age = $_POST['age'];
-            $weight = $_POST['weight'];
-            $height = $_POST['height'];
-         
-            $bmi = $weight / ($height * $height);
-            
-            if ($bmi < 18.5) {
-                $bmi_status = "น้ำหนักน้อย";
-                $recommendation = "ควรเพิ่มน้ำหนักเพื่อสุขภาพที่ดี";
-            } elseif ($bmi >= 18.5 && $bmi <= 24.9) {
-                $bmi_status = "น้ำหนักปกติ";
-                $recommendation = "สุขภาพดี รักษาน้ำหนักนี้ไว้";
-            } elseif ($bmi >= 25 && $bmi <= 29.9) {
-                $bmi_status = "น้ำหนักเกิน";
-                $recommendation = "ควรลดน้ำหนักเพื่อสุขภาพที่ดี";
-            } else {
-                $bmi_status = "อ้วน";
-                $recommendation = "ควรลดน้ำหนักและปรึกษาแพทย์";
-            }
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            echo "<div class='result'>
-                    <p><strong>ข้อมูลผู้ใช้:</strong></p>
-                    <p>ชื่อ: $first_name $last_name</p>
-                    <p>อายุ: $age ปี</p>
-                    <p>น้ำหนัก: $weight kg</p>
-                    <p>ส่วนสูง: $height m</p>
-                    <p><strong>BMI: </strong>" . number_format($bmi, 2) . "</p>
-                    <p><strong>สถานะ BMI: </strong>$bmi_status</p>
-                    <p><strong>คำแนะนำ: </strong>$recommendation</p>
-                  </div>";
+        $first_name = $_POST['first_name'];
+        $last_name = $_POST['last_name'];
+        $age = $_POST['age'];
+        $weight = $_POST['weight'];
+        $height = $_POST['height'];
+
+        // Calculate BMI by calling the function with weight and height
+        $bmi = bmiConvert($weight, $height);
+        
+        $bmi = bmiToText($bmi);
+
+        echo "<div class='result'>
+                <p><strong>ข้อมูลผู้ใช้:</strong></p>
+                <p>ชื่อ: $first_name $last_name</p>
+                <p>อายุ: $age ปี</p>
+                <p>น้ำหนัก: $weight kg</p>
+                <p>ส่วนสูง: $height m</p>
+                <p><strong>BMI: </strong>" . number_format($bmi, 2) . "</p>
+                <p><strong>สถานะ BMI: </strong>$bmiConvert</p>
+                <p><strong>คำแนะนำ: </strong>$bmiToText</p>
+              </div>";
+    }
+
+    // Function to calculate BMI
+
+    function bmiConvert($weight, $height){
+        return $weight / ($height * $height);
+    }
+    function bmiTotext($bmi){
+        if ($bmi < 18.5) {
+            $bmi_status = "น้ำหนักน้อย";
+            $recommendation = "ควรเพิ่มน้ำหนักเพื่อสุขภาพที่ดี";
+        } elseif ($bmi >= 18.5 && $bmi <= 24.9) {
+            $bmi_status = "น้ำหนักปกติ";
+            $recommendation = "สุขภาพดี รักษาน้ำหนักนี้ไว้";
+        } elseif ($bmi >= 25 && $bmi <= 29.9) {
+            $bmi_status = "น้ำหนักเกิน";
+            $recommendation = "ควรลดน้ำหนักเพื่อสุขภาพที่ดี";
+        } else {
+            $bmi_status = "อ้วน";
+            $recommendation = "ควรลดน้ำหนักและปรึกษาแพทย์";
         }
-    ?>
+    }
+?>
+
 
 </div>
 
