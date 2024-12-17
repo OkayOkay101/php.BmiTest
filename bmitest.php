@@ -90,7 +90,8 @@
         // Calculate BMI by calling the function with weight and height
         $bmi = bmiConvert($weight, $height);
         
-        $bmi = bmiToText($bmi);
+        // Get BMI status and recommendation
+        list($bmi_status, $recommendation) = bmiToText($bmi);
 
         echo "<div class='result'>
                 <p><strong>ข้อมูลผู้ใช้:</strong></p>
@@ -99,17 +100,18 @@
                 <p>น้ำหนัก: $weight kg</p>
                 <p>ส่วนสูง: $height m</p>
                 <p><strong>BMI: </strong>" . number_format($bmi, 2) . "</p>
-                <p><strong>สถานะ BMI: </strong>$bmiConvert</p>
-                <p><strong>คำแนะนำ: </strong>$bmiToText</p>
+                <p><strong>สถานะ BMI: </strong>$bmi_status</p>
+                <p><strong>คำแนะนำ: </strong>$recommendation</p>
               </div>";
     }
 
     // Function to calculate BMI
-
     function bmiConvert($weight, $height){
         return $weight / ($height * $height);
     }
-    function bmiTotext($bmi){
+
+    // Function to return BMI status and recommendation
+    function bmiToText($bmi){
         if ($bmi < 18.5) {
             $bmi_status = "น้ำหนักน้อย";
             $recommendation = "ควรเพิ่มน้ำหนักเพื่อสุขภาพที่ดี";
@@ -123,8 +125,12 @@
             $bmi_status = "อ้วน";
             $recommendation = "ควรลดน้ำหนักและปรึกษาแพทย์";
         }
+
+        // Return the status and recommendation
+        return [$bmi_status, $recommendation];
     }
 ?>
+
 
 
 </div>
